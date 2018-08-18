@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"
+        android:background="?selectableItemBackground"
+        android:layoutDirection="rtl"
+        android:orientation="horizontal">
+
+        <com.ducnd.statuscircel.CircleStatusImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ao_dai"
+            app:radioActive="4dp"
+            app:sizeActiveBorder="1.5dp" />
+
+        <chatfun.ducnd.com.chatfun.cutomeview.SquareImageView
+            android:id="@+id/iv_image"
+            android:layout_width="156dp"
+            android:layout_height="156dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="4dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ao_dai" />
+
+    </LinearLayout>
+</layout>

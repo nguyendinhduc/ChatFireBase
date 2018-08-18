@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+ <LinearLayout
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintBottom_toBottomOf="parent"
+     android:orientation="vertical">
+     <android.support.v7.widget.AppCompatImageView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         app:srcCompat="@drawable/chat_fun_large"
+        />
+<chatfun.ducnd.com.chatfun.cutomeview.CustomTextView
+    android:layout_width="wrap_content"
+    android:text="Chat Fun 😊"
+    android:textSize="26sp"
+    android:textColor="@color/colorPrimary"
+    android:layout_gravity="center_horizontal"
+    app:typeFaceText="bold"
+    android:layout_height="wrap_content" />
+ </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
