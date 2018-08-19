@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import chatfun.ducnd.com.chatfun.GlideApp
 import chatfun.ducnd.com.chatfun.R
 import chatfun.ducnd.com.chatfun.databinding.ItemChatImageFromBinding
@@ -16,7 +15,7 @@ import chatfun.ducnd.com.chatfun.model.ChattingItem
 import chatfun.ducnd.com.chatfun.utils.StringUtils
 import com.ducnd.statuscircel.CircleStatusImageView
 
-class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>, View.OnClickListener {
     private val inter: IChattingAdapter
 
     constructor(inter: IChattingAdapter) {
@@ -35,12 +34,14 @@ class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
             ChattingAdapter.TO_IMG -> {
                 viewHolder = ItemChatImageToBinding.inflate(inflat, parent, false)
+                viewHolder.ivImage.setOnClickListener(this)
             }
             else -> {
                 viewHolder = ItemChatImageFromBinding.inflate(inflat, parent, false)
+                viewHolder.ivImage.setOnClickListener(this)
             }
         }
-        return ChattingHolder(viewHolder, type)
+        return ChattingHolder(viewHolder, type, inter)
     }
 
     override fun getItemCount() = inter.getCount()
@@ -134,6 +135,18 @@ class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     override fun getItemViewType(position: Int) = inter.getData(position).type
 
+    override fun onClick(view: View) {
+        when (view.id) {
+            R.id.iv_image -> {
+                val position = (view.tag as () -> Int)()
+                inter.onClickImage(position, view)
+            }
+            else -> {
+
+            }
+        }
+    }
+
     interface IChattingAdapter {
         fun getCount(): Int
         fun getData(position: Int): ChattingItem
@@ -141,6 +154,7 @@ class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         fun getAvatarFriend(): String?
         fun getMyAvatar(): String?
         fun isFriendOnline(): Boolean
+        fun onClickImage(position: Int, viewClick: View)
     }
 
     companion object {
@@ -149,8 +163,20 @@ class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         const val TO_IMG = 2
         const val FROM_IMG = 3
 
-        class ChattingHolder<Bi : ViewDataBinding>(val binding: Bi, val type: Int) : RecyclerView.ViewHolder(binding.root) {
-
+        class ChattingHolder<Bi : ViewDataBinding>(val binding: Bi, val type: Int, inter: IChattingAdapter) : RecyclerView.ViewHolder(binding.root) {
+            init {
+                if (binding is ItemChatImageFromBinding) {
+                    (binding as ItemChatImageFromBinding).ivImage.setOnClickListener {
+                        inter.onClickImage(adapterPosition, it)
+                    }
+                } else {
+                    if (binding is ItemChatImageToBinding) {
+                        (binding as ItemChatImageToBinding).ivImage.setOnClickListener {
+                            inter.onClickImage(adapterPosition, it)
+                        }
+                    }
+                }
+            }
         }
     }
 }

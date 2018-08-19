@@ -1,5 +1,6 @@
 package chatfun.ducnd.com.chatfun.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -9,6 +10,9 @@ import chatfun.ducnd.com.chatfun.adapter.ChattingAdapter
 import chatfun.ducnd.com.chatfun.model.ChattingItem
 import chatfun.ducnd.com.chatfun.utils.StringUtils
 import kotlinx.android.synthetic.main.activity_chatting.*
+import android.support.v4.app.ActivityOptionsCompat
+import android.view.View
+
 
 class ChattingActivity : AppCompatActivity(), ChattingAdapter.IChattingAdapter {
 
@@ -73,6 +77,13 @@ class ChattingActivity : AppCompatActivity(), ChattingAdapter.IChattingAdapter {
         rc_send.layoutManager = LinearLayoutManager(this)
         rc_send.adapter = ChattingAdapter(this)
 
+        refresh.setOnRefreshListener {
+            refresh.isRefreshing=false
+        }
+        btn_back.setOnClickListener{
+            onBackPressed()
+        }
+
 
     }
     
@@ -112,4 +123,11 @@ class ChattingActivity : AppCompatActivity(), ChattingAdapter.IChattingAdapter {
 
     override fun isFriendOnline() = isOnline
 
+    override fun onClickImage(position: Int, viewClick:View) {
+        val intent = Intent()
+        intent.setClass(this, ImageActivity::class.java)
+        intent.putExtra("ULR_IMAGE",  chattingItems.get(position).linkImage)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, viewClick, "image")
+        startActivity(intent, options.toBundle());
+    }
 }

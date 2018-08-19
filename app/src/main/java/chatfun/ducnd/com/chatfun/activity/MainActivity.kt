@@ -50,6 +50,13 @@ class MainActivity : AppCompatActivity(), FriendAdapter.IFriendAdapter {
 
         rc_friend.layoutManager = LinearLayoutManager(this)
         rc_friend.adapter = FriendAdapter(this)
+
+        refresh.setOnRefreshListener {
+            refresh.isRefreshing=false
+        }
+        btn_back.setOnClickListener{
+            onBackPressed()
+        }
     }
 
     override fun getCount() = friends.size
